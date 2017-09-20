@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Smule Downloader </title>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="http://w1.smule.com/assets/community_core-3ea9629ec13085918db8e4878c82a2d7.js"></script>
+    <script type="text/javascript" src="http://w1.smule.com/assets/vendor/leaflet-0.6.2-078953f5f259c3dd370e526a5b942492.js"></script>
+  </head>
+  <body style="background: #F8F8F8;">
+    <div id="container" style="display:none;"></div>
+    <input type="text" id="url">
+    <button id="getUrl">Button</button>
+    <a href="#" style="display:none;" id="download">Download</a>
+    <script>
+
+      $('#getUrl').click(function(){
+        var myUrl = $('#url').val();
+        //  But if you make it from a browser, then it will work without problem ...
+
+        // However to make it work, we are going to use the cors-anywhere free service to bypass this
+        var proxy = 'https://cors-anywhere.herokuapp.com/';
+        var sd;
+        $.ajax({
+          // The proxy url expects as first URL parameter the URL to be bypassed
+          // https://cors-anywhere.herokuapp.com/{my-url-to-bypass}
+          url: proxy + myUrl,
+          success:function(data){
+              $('#container').html(data);
+              var a = $.processRecording(DataStore.Pages.CreationPlayer.performance.media_url);
+              $('#download').attr('href',a);
+              $('#download').show();
+          }
+        });
+      })
+
+
+    </script>
+  </body>
+</html>
